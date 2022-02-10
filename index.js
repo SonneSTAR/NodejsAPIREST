@@ -31,12 +31,13 @@ http
             console.log("CAPTURO EL POST TRANSFERENCIA")
             req.on("data",(chunk) =>{
                 body += chunk;
-                console.log("asdad" + body)
+                console.log("JSON" + body)
             })
                 req.on("end", async () =>{
                 const datos = Object.values(JSON.parse(body));
-                console.log("DATOS JSON.PARSE " + datos)
-                const respuesta = await insertarTransferencia(datos);
+                console.log(datos)
+                console.log("DATOS JSON.PARSE " + datos[0])
+                const respuesta = await insertarTransferencia(datos, datos[0], datos[1],datos[2]);
                 res.end(JSON.stringify(respuesta)); 
             });
         }

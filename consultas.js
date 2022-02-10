@@ -1,4 +1,4 @@
-// Paso 1
+
 const { Pool } = require("pg");
 
 const pool = new Pool({
@@ -48,20 +48,30 @@ async function insertar(datos){
         return error;
 
     }
-};
+}; 
 
-async function insertarTransferencia(datos){
+async function insertarTransferencia(datos,emisor,receptor, monto){
     const consultaUno = {
         text: "INSERT INTO transferencias(emisor,receptor,monto) VALUES ($1,$2,$3)",
         values: datos,
     };
+    const consultaDos = {
+        text: "UPDATE usuarios SET balance = balance - $1 WHERE nombre = $2 RETURNING *",
+        values: [monto,emisor],
+    };
+    const consultaTres = {
+        text: "UPDATE usuarios SET balance = balance + $1 WHERE nombre = $2 RETURNING *",
+        values: [monto,receptor],
+    };
     try {
         const result = await pool.query(consultaUno)
+        const result2 = await pool.query(consultaDos)
+        const result3 = await pool.query(consultaTres) 
         return result;
         
     } catch (error) {
         
-        console.log("error consulta" + error.code);
+        console.log("error consulta: " + error.code);
         return error;
 
     }
