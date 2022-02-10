@@ -1,0 +1,4 @@
+# REST API NodeJS
+
+Used technology:
+- HTML, CSS, BOOSTRAP, JQUERY, AXIOS, JAVASCRIPT, NODEJS (connection pool), POSTGRESQL DATABASE.
