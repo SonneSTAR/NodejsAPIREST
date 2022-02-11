@@ -28,15 +28,11 @@ http
 
         if(req.url == "/transferencia" && req.method === "POST"){
             let body = "";
-            console.log("CAPTURO EL POST TRANSFERENCIA")
             req.on("data",(chunk) =>{
                 body += chunk;
-                console.log("JSON" + body)
             })
                 req.on("end", async () =>{
                 const datos = Object.values(JSON.parse(body));
-                console.log(datos)
-                console.log("DATOS JSON.PARSE " + datos[0])
                 const respuesta = await insertarTransferencia(datos, datos[0], datos[1],datos[2]);
                 res.end(JSON.stringify(respuesta)); 
             });
@@ -50,11 +46,9 @@ http
             console.log(body)
             req.on("data",(chunk) =>{
                 body += chunk;
-                console.log("asdad" + body)
             })
                 req.on("end", async () =>{
                 const datos = Object.values(JSON.parse(body));
-                console.log("DATOS JSON.PARSE " + datos)
                 const respuesta = await insertar(datos);
 
                 res.end(JSON.stringify(respuesta)); 
